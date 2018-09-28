@@ -28,7 +28,7 @@
 #include "simple_idct.h"
 
 #define BIAS     (1 << (PRORES_BITS_PER_SAMPLE - 1))           ///< bias value for converting signed pixels into unsigned ones
-#define CLIP_MIN (1 << (PRORES_BITS_PER_SAMPLE - 8))           ///< minimum value for clipping resulting pixels
+#define CLIP_MIN (1 << (PRORES_BITS_PER_SAMPLE - 10))           ///< minimum value for clipping resulting pixels
 #define CLIP_MAX (1 << PRORES_BITS_PER_SAMPLE) - CLIP_MIN - 1  ///< maximum value for clipping resulting pixels
 
 #define CLIP(x) (av_clip((x), CLIP_MIN, CLIP_MAX))
@@ -60,8 +60,10 @@ av_cold void ff_proresdsp_init(ProresDSPContext *dsp, AVCodecContext *avctx)
     dsp->idct_put = prores_idct_put_c;
     dsp->idct_permutation_type = FF_IDCT_PERM_NONE;
 
+#if 0
     if (ARCH_X86)
         ff_proresdsp_init_x86(dsp, avctx);
+#endif
 
     ff_init_scantable_permutation(dsp->idct_permutation,
                                   dsp->idct_permutation_type);

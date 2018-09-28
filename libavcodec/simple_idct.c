@@ -241,13 +241,13 @@ void ff_prores_idct(int16_t *block, const int16_t *qmat)
     int i;
 
     for (i = 0; i < 64; i++)
-        block[i] *= qmat[i];
+        block[i] *= qmat[i]; // FIXME do this in the codec
 
     for (i = 0; i < 8; i++)
-        idctRowCondDC_extrashift_10(block + i*8, 2);
+        idctRowCondDC_int16_12bit(block + i*8, 0);
 
     for (i = 0; i < 8; i++) {
-        block[i] += 8192;
-        idctSparseCol_extrashift_10(block + i);
+        block[i] += 8192; // FIXME: do this in the codec
+        idctSparseCol_int16_12bit(block + i);
     }
 }

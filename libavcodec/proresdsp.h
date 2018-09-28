@@ -27,7 +27,7 @@
 #include <stdint.h>
 #include "avcodec.h"
 
-#define PRORES_BITS_PER_SAMPLE 10 ///< output precision of prores decoder
+#define PRORES_BITS_PER_SAMPLE 12 ///< output precision of prores decoder
 
 typedef struct ProresDSPContext {
     int idct_permutation_type;
