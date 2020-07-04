@@ -31,15 +31,15 @@
 #include "vlc.h"
 
 #define VLC_BITS       9
-#define SUBBAND_COUNT 10
-
+#define SUBBAND_COUNT_TYPE_0 10
+#define SUBBAND_COUNT 17
 typedef struct CFHD_RL_VLC_ELEM {
     int16_t level;
     int8_t len;
     uint16_t run;
 } CFHD_RL_VLC_ELEM;
 
-#define DWT_LEVELS 3
+#define DWT_LEVELS 6
 
 typedef struct SubBand {
     int level;
@@ -64,7 +64,7 @@ typedef struct Plane {
 
     /* TODO: merge this into SubBand structure */
     int16_t *subband[SUBBAND_COUNT];
-    int16_t *l_h[8];
+    int16_t *l_h[10];
 
     SubBand band[DWT_LEVELS][4];
 } Plane;
@@ -83,9 +83,13 @@ typedef struct CFHDContext {
 
     CFHD_RL_VLC_ELEM table_18_rl_vlc[4572];
     VLC vlc_18;
-
     GetBitContext gb;
 
+    int sample_type;
+    int transform_type;
+    int encode_method;
+    int first_wavelet;
+    int pframe;
     int coded_width;
     int coded_height;
     int cropped_height;
